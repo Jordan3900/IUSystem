@@ -19,6 +19,9 @@
               asp-fallback-href="~/Identity/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
     </environment>
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/mystyle.css" />
+    </environment>
     <link rel="stylesheet" href="~/Identity/css/site.css" />
 </head>
 <body>
@@ -57,7 +60,7 @@
     </div>
     <footer class="footer border-top text-muted">
         <div class="container">
-            &copy; 2019 - IUSystem - <a asp-area="" asp-page="Privacy">Privacy</a>
+            &copy; 2019 - IUSystem - All rights reserved. <a asp-area="" asp-page="Privacy">Privacy</a>
         </div>
     </footer>
 

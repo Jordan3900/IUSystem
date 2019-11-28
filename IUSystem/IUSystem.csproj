@@ -38,6 +38,8 @@
     <Compile Remove="Data\Migrations\20191123114647_correction.Designer.cs" />
     <Compile Remove="Data\Migrations\20191123115503_addedUsers.cs" />
     <Compile Remove="Data\Migrations\20191123115503_addedUsers.Designer.cs" />
+    <Compile Remove="Data\Migrations\20191128135627_CorrectDB.cs" />
+    <Compile Remove="Data\Migrations\20191128135627_CorrectDB.Designer.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -16,19 +16,22 @@ namespace IUSystem.Models
             this.Lectures = new HashSet<Lectures>();
         }
 
-        [Key]
-        public string TeacherId { get; set; }
+      
+        public Guid Id { get; set; }
 
         [ForeignKey("UserId")]
         public virtual IdentityUser User { get; set; }
+
         public string UserId { get; set; }
+
         public string FirstName { get; set; }
 
         public string MiddleName { get; set; }
 
+        public string Number { get; set; }
+
         public string LastName { get; set; }
 
-        public Gender Gender { get; set; }
         public virtual ICollection<Lectures> Lectures { get; set; }
     }
 }

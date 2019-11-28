@@ -7,7 +7,7 @@ namespace IUSystem.Models
 {
     public class Lectures
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         public Subject Subject { get; set; }
 

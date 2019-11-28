@@ -16,7 +16,7 @@ namespace IUSystem.Models
         }
 
         [Key]
-        public string StudentId { get; set; }
+        public Guid Id { get; set; }
 
         [ForeignKey("UserId")]
         public virtual IdentityUser User { get; set; }
@@ -28,6 +28,7 @@ namespace IUSystem.Models
 
         public string LastName { get; set; }
 
+        public string Number { get; set; }
         public ICollection<Lectures> Lectures { get; set; }
     }
 }

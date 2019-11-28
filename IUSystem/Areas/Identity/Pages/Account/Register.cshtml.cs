@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using IUSystem.Data;
+using IUSystem.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -23,17 +25,20 @@ namespace IUSystem.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
@@ -61,6 +66,14 @@ namespace IUSystem.Areas.Identity.Pages.Account
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
+   
+            [Display(Name = "Teacher Number")]
+            public string TeacherNumber { get; set; }
+
+
+            [Display(Name = "Student Number")]
+            public string StudentNumber { get; set; }
+
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -87,10 +100,39 @@ namespace IUSystem.Areas.Identity.Pages.Account
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    if (String.IsNullOrWhiteSpace(Input.TeacherNumber))
+                    {
+                        var student = new Student
+                        {
+                            FirstName = Input.FirstName,
+                            MiddleName = Input.MiddleName,
+                            LastName = Input.LastName,
+                            User = user,
+                            Number = Input.StudentNumber
+                        };
+
+                        _context.Students.Add(student);
+                    }
+                    else
+                    {
+                        var teacher = new Teacher
+                        {
+                            FirstName = Input.FirstName,
+                            MiddleName = Input.MiddleName,
+                            LastName = Input.LastName,
+                            User = user,
+                            Number = Input.TeacherNumber
+                        };
+
+                        _context.Teachers.Add(teacher);
+                    }
+
+                    await _context.SaveChangesAsync();
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
