@@ -53,7 +53,7 @@ export class Login extends Component {
                 case LoginActions.Login:
                     return (<div style={{color: "white"}}>Processing login</div>);
                 case LoginActions.LoginCallback:
-                    return (<div style={{color: "red"}}>Processing login callback</div>);
+                    return (<div style={{color: "white"}}>Processing login callback</div>);
                 case LoginActions.Profile:
                 case LoginActions.Register:
                     return (<div></div>);
