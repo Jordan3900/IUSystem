@@ -7,14 +7,14 @@ namespace IUSystem.Models
 {
     public class Lectures
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
-        public Subject Subject { get; set; }
+        public virtual Subject Subject { get; set; }
 
         public DateTime StartTime { get; set; }
 
         public DateTime EndTime { get; set; }
 
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
     }
 }

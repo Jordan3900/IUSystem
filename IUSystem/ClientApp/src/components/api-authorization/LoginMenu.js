@@ -10,7 +10,8 @@ export class LoginMenu extends Component {
 
         this.state = {
             isAuthenticated: false,
-            userName: null
+            userName: null,
+            isAdmin: false
         };
     }
 
@@ -24,15 +25,16 @@ export class LoginMenu extends Component {
     }
 
     async populateState() {
-        const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()])
+        const [isAuthenticated, user, isAdmin] = await Promise.all([authService.isAuthenticated(), authService.getUser()])
         this.setState({
             isAuthenticated,
-            userName: user && user.name
+            userName: user && user.name,
+            isAdmin: user && user.name == 'admin_ius@dev.com'
         });
     }
 
     render() {
-        const { isAuthenticated, userName } = this.state;
+        const { isAuthenticated, userName, isAdmin } = this.state;
         if (!isAuthenticated) {
             const registerPath = `${ApplicationPaths.Register}`;
             const loginPath = `${ApplicationPaths.Login}`;
@@ -40,15 +42,20 @@ export class LoginMenu extends Component {
         } else {
             const profilePath = `${ApplicationPaths.Profile}`;
             const logoutPath = { pathname: `${ApplicationPaths.LogOut}`, state: { local: true } };
-            return this.authenticatedView(userName, profilePath, logoutPath);
+            return this.authenticatedView(userName, profilePath, logoutPath, isAdmin);
         }
     }
 
-    authenticatedView(userName, profilePath, logoutPath) {
+    authenticatedView(userName, profilePath, logoutPath, isAdmin) {
         return (<Fragment>
             <NavItem>
                 <NavLink tag={Link} className="text-white" to={profilePath}>Hello {userName}</NavLink>
             </NavItem>
+            {isAdmin ? 
+             <NavItem>
+                <NavLink tag={Link} className="text-white" to={profilePath}>Admin panel</NavLink>
+            </NavItem> 
+            : null}
             <NavItem>
                 <NavLink tag={Link} className="text-white" to={logoutPath}>Logout</NavLink>
             </NavItem>

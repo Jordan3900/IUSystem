@@ -17,7 +17,7 @@ namespace IUSystem.Models
         }
 
       
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [ForeignKey("UserId")]
         public virtual IdentityUser User { get; set; }

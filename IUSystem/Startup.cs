@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 using System;
 using IUSystem.Constans;
+using IUSystem.Middlewares.MiddlewareExtensions;
 
 namespace IUSystem
 {
@@ -31,7 +32,7 @@ namespace IUSystem
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
@@ -57,10 +58,12 @@ namespace IUSystem
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseSeedDataMiddleware();
             }
             else
             {
@@ -95,7 +98,6 @@ namespace IUSystem
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-
             CreateRoles(services).Wait();
         }
         private async Task CreateRoles(IServiceProvider serviceProvider)
@@ -103,6 +105,36 @@ namespace IUSystem
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
             string[] roleNames = {Constants.ADMIN_ROLE, Constants.FACILITATOR_ROLE, Constants.LEAD_USER_ROLE, Constants.USER_ROLE };
+            IdentityResult roleResult;
+
+            //create roles
+            foreach (var roleName in roleNames)
+            {
+                var roleExists = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExists)
+                {
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            IdentityUser admin = await UserManager.FindByEmailAsync(Constants.ADMIN_EMAIL);
+
+            if (admin == null)
+            {
+                admin = new IdentityUser()
+                {
+                    UserName = Constants.ADMIN_EMAIL,
+                    Email = Constants.ADMIN_EMAIL
+                };
+                await UserManager.CreateAsync(admin, Constants.SEED_USERS_PASSWORD);
+            }
+            await UserManager.AddToRoleAsync(admin, Constants.ADMIN_ROLE);
+        }
+        private async Task SeedData(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            string[] roleNames = { Constants.ADMIN_ROLE, Constants.FACILITATOR_ROLE, Constants.LEAD_USER_ROLE, Constants.USER_ROLE };
             IdentityResult roleResult;
 
             //create roles
