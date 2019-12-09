@@ -15,7 +15,6 @@ namespace IUSystem.Models
             this.Subjects = new HashSet<Subject>();
         }
 
-        [Key]
         public string Id { get; set; }
 
         [ForeignKey("UserId")]
