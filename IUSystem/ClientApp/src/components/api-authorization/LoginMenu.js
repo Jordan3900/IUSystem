@@ -10,8 +10,13 @@ export class LoginMenu extends Component {
 
         this.state = {
             isAuthenticated: false,
+<<<<<<< HEAD
             isAdimn: false,
             userName: null
+=======
+            userName: null,
+            isAdmin: false
+>>>>>>> 9b9b096058aa95bb95538e55f88e2fbae0297e78
         };
     }
 
@@ -25,7 +30,7 @@ export class LoginMenu extends Component {
     }
 
     async populateState() {
-        const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()])
+        const [isAuthenticated, user, isAdmin] = await Promise.all([authService.isAuthenticated(), authService.getUser()])
         this.setState({
             isAuthenticated,
             userName: user && user.name,
@@ -51,11 +56,19 @@ export class LoginMenu extends Component {
             <NavItem>
                 <NavLink tag={Link} className="text-white" to={profilePath}>Hello {userName}</NavLink>
             </NavItem>
+<<<<<<< HEAD
             { isAdmin ? 
              <NavItem>
                 <NavLink tag={Link} className="text-white" to={profilePath}>Admin panel</NavLink>
             </NavItem> : null
             }
+=======
+            {isAdmin ? 
+             <NavItem>
+                <NavLink tag={Link} className="text-white" to={profilePath}>Admin panel</NavLink>
+            </NavItem> 
+            : null}
+>>>>>>> 9b9b096058aa95bb95538e55f88e2fbae0297e78
             <NavItem>
                 <NavLink tag={Link} className="text-white" to={logoutPath}>Logout</NavLink>
             </NavItem>

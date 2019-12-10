@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
@@ -40,6 +41,10 @@
     <Compile Remove="Data\Migrations\20191123115503_addedUsers.Designer.cs" />
     <Compile Remove="Data\Migrations\20191128135627_CorrectDB.cs" />
     <Compile Remove="Data\Migrations\20191128135627_CorrectDB.Designer.cs" />
+    <Compile Remove="Data\Migrations\20191128140224_CorrectDB.cs" />
+    <Compile Remove="Data\Migrations\20191128140224_CorrectDB.Designer.cs" />
+    <Compile Remove="Data\Migrations\20191210134531_ExtendDb.cs" />
+    <Compile Remove="Data\Migrations\20191210134531_ExtendDb.Designer.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

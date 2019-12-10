@@ -2,7 +2,7 @@
 
 namespace IUSystem.Data.Migrations
 {
-    public partial class CorrectDB : Migration
+    public partial class ExtendDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +26,10 @@ namespace IUSystem.Data.Migrations
                 name: "PK_Students",
                 table: "Students");
 
+            migrationBuilder.DropIndex(
+                name: "IX_Lectures_StudentId",
+                table: "Lectures");
+
             migrationBuilder.DropColumn(
                 name: "TeacherId",
                 table: "Teachers");
@@ -37,6 +41,10 @@ namespace IUSystem.Data.Migrations
             migrationBuilder.DropColumn(
                 name: "StudentId",
                 table: "Students");
+
+            migrationBuilder.DropColumn(
+                name: "StudentId",
+                table: "Lectures");
 
             migrationBuilder.AddColumn<string>(
                 name: "Id",
@@ -71,14 +79,6 @@ namespace IUSystem.Data.Migrations
                 column: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Lectures_Students_StudentId",
-                table: "Lectures",
-                column: "StudentId",
-                principalTable: "Students",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_Lectures_Teachers_TeacherId",
                 table: "Lectures",
                 column: "TeacherId",
@@ -97,10 +97,6 @@ namespace IUSystem.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Lectures_Students_StudentId",
-                table: "Lectures");
-
             migrationBuilder.DropForeignKey(
                 name: "FK_Lectures_Teachers_TeacherId",
                 table: "Lectures");
@@ -154,6 +150,12 @@ namespace IUSystem.Data.Migrations
                 nullable: false,
                 defaultValue: "");
 
+            migrationBuilder.AddColumn<string>(
+                name: "StudentId",
+                table: "Lectures",
+                type: "nvarchar(450)",
+                nullable: true);
+
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Teachers",
                 table: "Teachers",
@@ -162,6 +164,11 @@ namespace IUSystem.Data.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Students",
                 table: "Students",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lectures_StudentId",
+                table: "Lectures",
                 column: "StudentId");
 
             migrationBuilder.AddForeignKey(

@@ -7,10 +7,15 @@ namespace IUSystem.Models
 {
     public class Room
     {
-        public Guid  Id { get; set; }
+        public Room()
+        {
+            this.Lectures = new HashSet<Lectures>();
+        }
+
+        public string  Id { get; set; }
 
         public string Name { get; set; }
 
-        public ICollection<Lectures> Lectures { get; set; }
+        public virtual ICollection<Lectures> Lectures { get; set; }
     }
 }

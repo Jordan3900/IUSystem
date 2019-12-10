@@ -12,11 +12,10 @@ namespace IUSystem.Models
     {
         public Student()
         {
-            this.Lectures = new HashSet<Lectures>();
+            this.Subjects = new HashSet<Subject>();
         }
 
-        [Key]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [ForeignKey("UserId")]
         public virtual IdentityUser User { get; set; }
@@ -29,6 +28,6 @@ namespace IUSystem.Models
         public string LastName { get; set; }
 
         public string Number { get; set; }
-        public ICollection<Lectures> Lectures { get; set; }
+        public virtual ICollection<Subject> Subjects { get; set; }
     }
 }
