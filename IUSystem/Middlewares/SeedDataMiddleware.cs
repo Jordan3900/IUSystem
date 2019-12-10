@@ -25,8 +25,15 @@ namespace IUSystem.Middlewares
            UserManager<IdentityUser> userManager
          )
         {
-            await this.SeedStudents(dbContext, userManager);
-            await this.SeedTeachers(dbContext, userManager);
+            if (!dbContext.Teachers.Any())
+            {
+                await this.SeedTeachers(dbContext, userManager);
+            }
+
+            if (!dbContext.Students.Any())
+            {
+                await this.SeedStudents(dbContext, userManager);
+            }
 
             if (!dbContext.Rooms.Any())
             {
@@ -66,7 +73,7 @@ namespace IUSystem.Middlewares
                 var roomNum = i + 1 + "00";
                 var room = rooms.FirstOrDefault(x => x.Name == roomNum);
                 var id = Guid.NewGuid().ToString();
-                var lecture = new Lectures { Id = id, StartTime = startTime, EndTime = endTime, Room = room, Subject = subject };
+                var lecture = new Lectures { Id = id, StartTime = startTime, EndTime = endTime, Room = room, Subject = subject, Teacher = teacher };
 
                 dbContext.Lectures.Add(lecture);
                 lectures.Add(lecture);
@@ -84,12 +91,13 @@ namespace IUSystem.Middlewares
 
             for (int i = 0; i < students.Count; i++)
             {
+                var id = Guid.NewGuid().ToString();
                 var studentIndex = random.Next(0, 10);
                 var grade = random.Next(2, 7);
                 var student = students[studentIndex];
                 var name = "Test Subject of Theory" + i;
 
-                var subject = new Subject { Grade = grade, Student = student, Name = name };
+                var subject = new Subject { Id = id, Grade = grade, Student = student, Name = name };
                 subjects.Add(subject);
             }
 
@@ -103,7 +111,8 @@ namespace IUSystem.Middlewares
 
             for (int i = 1; i <= 10; i++)
             {
-                var room = new Room { Name = i + "00" };
+                var id = Guid.NewGuid().ToString();
+                var room = new Room { Id = id, Name = i + "00" };
                 rooms.Add(room);
             }
 
@@ -115,17 +124,20 @@ namespace IUSystem.Middlewares
         {
             var students = new List<Student>();
 
+
             for (int i = 0; i < 10; i++)
             {
                 var username = "StudentTest@test.bg" + i;
                 var email = "StudentTest@test.bg" + i;
                 var user = new IdentityUser { UserName = username, Email = email };
                 var result = await userManager.CreateAsync(user, Constants.SEED_USERS_PASSWORD);
+                var id = Guid.NewGuid().ToString();
 
                 if (result.Succeeded)
                 {
                     var student = new Student
                     {
+                        Id = id,
                         FirstName = "Test" + i,
                         MiddleName = "Testov" + i,
                         LastName = "Testovski" + i,
@@ -137,11 +149,9 @@ namespace IUSystem.Middlewares
                 }
             }
 
-            if (students.Any())
-            {
-                dbContext.Students.AddRange(students);
-                await dbContext.SaveChangesAsync();
-            }
+            dbContext.Students.AddRange(students);
+            await dbContext.SaveChangesAsync();
+
         }
 
         async private Task SeedTeachers(ApplicationDbContext dbContext, UserManager<IdentityUser> userManager)
@@ -152,11 +162,13 @@ namespace IUSystem.Middlewares
             {
                 var user = new IdentityUser { UserName = "DaskalTest@test.bg" + i, Email = "DaskalTest@test.bg" + i };
                 var result = await userManager.CreateAsync(user, Constants.SEED_USERS_PASSWORD);
+                var id = Guid.NewGuid().ToString();
 
                 if (result.Succeeded)
                 {
                     var student = new Teacher
                     {
+                        Id = id,
                         FirstName = "Daskal" + i,
                         MiddleName = "Daskalov" + i,
                         LastName = "Daskalovski" + i,
@@ -168,11 +180,9 @@ namespace IUSystem.Middlewares
                 }
             }
 
-            if (teachers.Any())
-            {
-                dbContext.Teachers.AddRange(teachers);
-                await dbContext.SaveChangesAsync();
-            }
+            dbContext.Teachers.AddRange(teachers);
+            await dbContext.SaveChangesAsync();
+
         }
     }
 }

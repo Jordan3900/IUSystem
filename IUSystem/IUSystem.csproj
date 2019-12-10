@@ -41,6 +41,10 @@
     <Compile Remove="Data\Migrations\20191123115503_addedUsers.Designer.cs" />
     <Compile Remove="Data\Migrations\20191128135627_CorrectDB.cs" />
     <Compile Remove="Data\Migrations\20191128135627_CorrectDB.Designer.cs" />
+    <Compile Remove="Data\Migrations\20191128140224_CorrectDB.cs" />
+    <Compile Remove="Data\Migrations\20191128140224_CorrectDB.Designer.cs" />
+    <Compile Remove="Data\Migrations\20191210134531_ExtendDb.cs" />
+    <Compile Remove="Data\Migrations\20191210134531_ExtendDb.Designer.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -16,5 +16,7 @@ namespace IUSystem.Models
         public DateTime EndTime { get; set; }
 
         public virtual Room Room { get; set; }
+
+        public virtual Teacher Teacher { get; set; }
     }
 }

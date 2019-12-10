@@ -20,9 +20,11 @@ namespace IUSystem
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -38,8 +40,12 @@ namespace IUSystem
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentityServer()
+            var identityBuilder = services.AddIdentityServer();
+            identityBuilder
                 .AddApiAuthorization<IdentityUser, ApplicationDbContext>();
+
+            if (!_env.IsDevelopment())
+                identityBuilder.AddSigningCredentials();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

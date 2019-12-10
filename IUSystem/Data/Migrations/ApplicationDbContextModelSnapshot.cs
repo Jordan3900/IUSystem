@@ -15,7 +15,7 @@ namespace IUSystem.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -33,9 +33,6 @@ namespace IUSystem.Data.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("SubjectId")
                         .HasColumnType("nvarchar(450)");
 
@@ -45,8 +42,6 @@ namespace IUSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("RoomId");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("SubjectId");
 
@@ -431,15 +426,11 @@ namespace IUSystem.Data.Migrations
                         .WithMany("Lectures")
                         .HasForeignKey("RoomId");
 
-                    b.HasOne("IUSystem.Models.Student", null)
-                        .WithMany("Lectures")
-                        .HasForeignKey("StudentId");
-
                     b.HasOne("IUSystem.Models.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId");
 
-                    b.HasOne("IUSystem.Models.Teacher", null)
+                    b.HasOne("IUSystem.Models.Teacher", "Teacher")
                         .WithMany("Lectures")
                         .HasForeignKey("TeacherId");
                 });
@@ -454,7 +445,7 @@ namespace IUSystem.Data.Migrations
             modelBuilder.Entity("IUSystem.Models.Subject", b =>
                 {
                     b.HasOne("IUSystem.Models.Student", "Student")
-                        .WithMany()
+                        .WithMany("Subjects")
                         .HasForeignKey("StudentId");
                 });
 

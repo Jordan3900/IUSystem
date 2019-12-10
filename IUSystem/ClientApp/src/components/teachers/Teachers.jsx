@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import authService from '../api-authorization/AuthorizeService'
 
 export class Teachers extends Component {
@@ -8,34 +8,44 @@ export class Teachers extends Component {
     this.state = { teachers: [], loading: true };
   }
 
-//   componentDidMount() {
-//     // this.populateWeatherData();
-//   }
+  componentDidMount() {
+    this.populateTeachersData();
+  }
 
-//   static renderTeachers(forecasts) {
-//     return (
-//      <h1>Hello From Teachers Page!</h1>
-//     );
-//   }
+  static renderTeachers(teachers) {
+    
+      
+    return (
+      teachers.map((teacher, i) =>
+          <div key={i}>
+          <h1 className="text-white">{teacher.firstName}</h1>
+          <h2 className="text-white">{teacher.lastName}</h2>
+          </div>
+      )
+    );
+  }
 
   render() {
-    // let contents = this.state.loading
-    //   ? <p><em>Loading...</em></p>
-    //   : FetchData.renderForecastsTable(this.state.forecasts);
+    let contents = this.state.loading
+      ? <p className="text-white"><em>Loading...</em></p>
+      : Teachers.renderTeachers(this.state.teachers);
 
     return (
       <div>
-        <h1>Hello from techers page!</h1>
+        <h1 className="text-center text-white">Find your teacher</h1>
+        {contents}
       </div>
     );
   }
 
-//   async populateWeatherData() {
-//     const token = await authService.getAccessToken();
-//     const response = await fetch('weatherforecast', {
-//       headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-//     });
-//     const data = await response.json();
-//     this.setState({ teachers: data, loading: false });
-//   }
+  async populateTeachersData() {
+    const token = await authService.getAccessToken();
+    const response = await fetch('teacher', {
+      headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await response.json();
+    console.log(data);
+    debugger;
+    this.setState({ teachers: data, loading: false });
+  }
 }
