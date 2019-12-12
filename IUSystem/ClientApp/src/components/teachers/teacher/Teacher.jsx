@@ -4,6 +4,7 @@ import {
   CardTitle, CardSubtitle, Button
 } from 'reactstrap';
 import avatar from './assets/avatar.svg'
+import { Link } from 'react-router-dom';
 
 const Teacher = (props) => {
   return (
@@ -11,8 +12,8 @@ const Teacher = (props) => {
         <CardImg src={avatar} alt="Card image cap" style={{width: "fit-content", height: "10em"}}/>
         <CardBody>
           <CardTitle>{props.name}</CardTitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-          <Button>View Profile</Button>
+          <CardText>Subjects: {props.lectures.join(', ')}</CardText>
+          <Button tag={Link}  to={`/teacher/${props.id}`}>View Lectures</Button>
         </CardBody>
       </Card>   
   );

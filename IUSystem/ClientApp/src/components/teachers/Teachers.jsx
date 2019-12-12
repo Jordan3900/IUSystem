@@ -46,7 +46,9 @@ export class Teachers extends Component {
         <div className="grid-container">
           {
             teachers.map((teacher, i) =>
-              <Teacher key={i} name={teacher.firstName + " " + teacher.lastName} />
+              <Teacher key={i} name={teacher.firstName + " " + teacher.middleName[0] + "." + " " + teacher.lastName}
+               id={teacher.id}
+               lectures={teacher.lectures} />
             )}
         </div>
       </Fragment>
