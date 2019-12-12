@@ -1,27 +1,55 @@
 import React, { Component, Fragment } from 'react';
+import _ from 'lodash'
 import authService from '../api-authorization/AuthorizeService'
+import Teacher from './teacher/Teacher';
+import './Teachers.css';
+import { Search } from 'semantic-ui-react';
+
+const initialState = { loading: false, results: [], value: '' }
 
 export class Teachers extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { teachers: [], loading: true };
+    this.state = { teachers: [], loading: true, value: '' };
   }
 
   componentDidMount() {
     this.populateTeachersData();
   }
 
+     handleResultSelect = (e, { result }) => this.setState({ value: result.firstName });
+
+     handleSearchChange = (e, { value }) => {
+      this.setState({ loading: true, value })
+  
+      setTimeout(() => {
+        if (this.state.value.length < 1) return this.setState(initialState)
+        const { teachers } = this.state;
+        const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
+        const isMatch = (result) => re.test(result.title)
+  
+        this.setState({
+          loading: false,
+          results: _.filter(teachers, isMatch),
+        })
+      }, 300)
+    }
+
   static renderTeachers(teachers) {
-    
-      
+
     return (
-      teachers.map((teacher, i) =>
-          <div key={i}>
-          <h1 className="text-white">{teacher.firstName}</h1>
-          <h2 className="text-white">{teacher.lastName}</h2>
-          </div>
-      )
+      <Fragment>
+        <div style={{marginLeft: "41%"}}>
+          <Search />
+        </div>
+        <div className="grid-container">
+          {
+            teachers.map((teacher, i) =>
+              <Teacher key={i} name={teacher.firstName + " " + teacher.lastName} />
+            )}
+        </div>
+      </Fragment>
     );
   }
 
@@ -43,9 +71,8 @@ export class Teachers extends Component {
     const response = await fetch('teacher', {
       headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
     });
+
     const data = await response.json();
-    console.log(data);
-    debugger;
-    this.setState({ teachers: data, loading: false });
+    this.setState({ teachers: data, loading: false, value: '' });
   }
 }
