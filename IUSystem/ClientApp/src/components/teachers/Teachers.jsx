@@ -7,7 +7,7 @@ import './Teachers.css';
 import { Search, Label } from 'semantic-ui-react';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
-const resultRenderer = ({ firstName, lastName}) => <Label content={firstName + " " +  lastName} />
+const resultRenderer = ({ firstName, lastName, id}) => <Label content={firstName + " " +  lastName} />;
 
 resultRenderer.propTypes = {
   firstName: PropTypes.string,
@@ -32,20 +32,40 @@ export class Teachers extends Component {
     this.populateTeachersData();
   }
 
-  handleResultSelect = (e, { result }) => this.setState({ value: result.firstName });
+  handleResultSelect = (e, { result }) => {
+    this.setState({ value: result.firstName + " " + result.lastName});
+    const { teachers } = this.state;
 
-  handleSearchChange = (e, { value }) => {
-    this.setState({ isSearchLoading: true, value })
-    debugger;
     setTimeout(() => {
-
-      const { results } = this.state;
+      if (this.state.value.length < 1) {
+        return this.setState({isSearchLoading: false, results: teachers, value: ''})
+      }
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-      const isMatch = (result) => re.test(result.firstName)
+      const isMatch = (result) => re.test(result.firstName + " " +  result.lastName)
 
       this.setState({
         isSearchLoading: false,
-        results: _.filter(results, isMatch),
+        results: _.filter(teachers, isMatch),
+        currentPage: 0
+      })
+    }, 300)
+  }
+
+  handleSearchChange = (e, { value }) => {
+
+    this.setState({ isSearchLoading: true, value });
+    const { teachers } = this.state;
+
+    setTimeout(() => {
+      if (this.state.value.length < 1) {
+        return this.setState({isSearchLoading: false, results: teachers, value: ''})
+      }
+      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
+      const isMatch = (result) => re.test(result.firstName + " " +  result.lastName)
+
+      this.setState({
+        isSearchLoading: false,
+        results: _.filter(teachers, isMatch),
       })
     }, 300)
   }
@@ -107,12 +127,12 @@ export class Teachers extends Component {
 
   render() {
     const pagesSize = 6;
-    const pagesCount = Math.ceil(this.state.teachers.length / pagesSize);
+    const pagesCount = Math.ceil(this.state.results.length / pagesSize);
     const { loading, isSearchLoading, teachers, currentPage, value, results } = this.state;
 
     let contents = loading
       ? <p className="text-white"><em>Loading...</em></p>
-      : Teachers.renderTeachers(teachers, currentPage, pagesSize, pagesCount, this.handleClick);
+      : Teachers.renderTeachers(results, currentPage, pagesSize, pagesCount, this.handleClick);
 
     return (
       <div>

@@ -48,16 +48,16 @@ export class Logout extends Component {
             return <div></div>
         }
         if (!!message) {
-            return (<div>{message}</div>);
+            return (<div className="text-white">{message}</div>);
         } else {
             const action = this.props.action;
             switch (action) {
                 case LogoutActions.Logout:
-                    return (<div>Processing logout</div>);
+                    return (<div className="text-white">Processing logout</div>);
                 case LogoutActions.LogoutCallback:
-                    return (<div>Processing logout callback</div>);
+                    return (<div className="text-white">Processing logout callback</div>);
                 case LogoutActions.LoggedOut:
-                    return (<div>{message}</div>);
+                    return (<div className="text-white">{message}</div>);
                 default:
                     throw new Error(`Invalid action '${action}'`);
             }

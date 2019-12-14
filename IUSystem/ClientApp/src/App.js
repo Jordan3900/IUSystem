@@ -7,6 +7,7 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import { Teachers } from './components/teachers/Teachers';
+import { MyStudents } from './components/students/Mystudents';
 import { DetailsTeacher } from './components/teachers/teacher/DetailsTeacher';
 
 import './custom.css'
@@ -19,6 +20,7 @@ export default class App extends Component {
       <Layout>
         <Route exact path='/' component={Home} />
         <AuthorizeRoute path='/teachers' component={Teachers} />
+        <AuthorizeRoute path='/mystudents' component={MyStudents} />
         <AuthorizeRoute path='/teacher/:id' component={DetailsTeacher} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>

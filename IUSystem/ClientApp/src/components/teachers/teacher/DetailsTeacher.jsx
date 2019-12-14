@@ -83,7 +83,7 @@ export class DetailsTeacher extends Component {
         const response = await fetch('teacherDetails', {
             headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
         });
-        debugger;
+
         const data = await response.json();
         const teacher = data.filter(x => x.id == id)[0];
         this.setState({ teacher: teacher, loading: false, value: '' });
