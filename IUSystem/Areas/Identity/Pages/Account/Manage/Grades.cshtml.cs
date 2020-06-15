@@ -31,6 +31,13 @@ namespace IUSystem.Areas.Identity.Pages.Account.Manage
             
             var user = await _userManager.GetUserAsync(User);
             var student = this.dbContext.Students.FirstOrDefault(x => x.UserId == user.Id);
+
+            if (student == null)
+            {
+                return RedirectToPage("../AccessDenied");
+            }
+
+          
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
