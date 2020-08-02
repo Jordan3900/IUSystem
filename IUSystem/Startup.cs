@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -110,7 +110,7 @@ namespace IUSystem
         {
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            string[] roleNames = {Constants.ADMIN_ROLE, Constants.FACILITATOR_ROLE, Constants.LEAD_USER_ROLE, Constants.USER_ROLE };
+            string[] roleNames = { Constants.ADMIN_ROLE, Constants.STUDENT_ROLE, Constants.TEACHER_ROLE };
             IdentityResult roleResult;
 
             //create roles
@@ -140,7 +140,7 @@ namespace IUSystem
         {
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            string[] roleNames = { Constants.ADMIN_ROLE, Constants.FACILITATOR_ROLE, Constants.LEAD_USER_ROLE, Constants.USER_ROLE };
+            string[] roleNames = { Constants.ADMIN_ROLE, Constants.TEACHER_ROLE, Constants.STUDENT_ROLE };
             IdentityResult roleResult;
 
             //create roles

@@ -1,0 +1,49 @@
+﻿@page
+@model IUSystem.Areas.Identity.Pages.Subjects.AllModel
+@{
+    ViewData["Title"] = "All";
+}
+
+<h1>All Subjects</h1>
+
+<table class="table">
+    <thead style="color: white;">
+        <tr>
+            <th>
+                Student Number
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subjects[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subjects[0].Grade)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="color: white;">
+        @foreach (var item in Model.Subjects)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grade)
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page-handler="delete" onclick="return confirm('Are you sure you want to delete this item?');"
+                       asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-right">
+    <a asp-page="./SubjectsAdd" class="btn btn-primary">Add</a>
+</div>

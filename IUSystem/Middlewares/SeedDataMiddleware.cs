@@ -56,7 +56,7 @@ namespace IUSystem.Middlewares
 
         async private Task SeedLectures(ApplicationDbContext dbContext)
         {
-            var lectures = new List<Lectures>();
+            var lectures = new List<Lecture>();
             var random = new Random();
             var teachers = dbContext.Teachers.ToList();
             var subjects = dbContext.Subjects.ToList();
@@ -73,7 +73,7 @@ namespace IUSystem.Middlewares
                 var roomNum = i + 1 + "00";
                 var room = rooms.FirstOrDefault(x => x.Name == roomNum);
                 var id = Guid.NewGuid().ToString();
-                var lecture = new Lectures { Id = id, StartTime = startTime, EndTime = endTime, Room = room, Subject = subject, Teacher = teacher };
+                var lecture = new Lecture { Id = id, StartTime = startTime, EndTime = endTime, Room = room, Subject = subject, Teacher = teacher };
 
                 dbContext.Lectures.Add(lecture);
                 lectures.Add(lecture);
@@ -124,7 +124,6 @@ namespace IUSystem.Middlewares
         {
             var students = new List<Student>();
 
-
             for (int i = 0; i < 10; i++)
             {
                 var username = "StudentTest@test.bg" + i;
@@ -146,6 +145,7 @@ namespace IUSystem.Middlewares
                     };
 
                     students.Add(student);
+                    await userManager.AddToRoleAsync(user, Constants.STUDENT_ROLE);
                 }
             }
 
@@ -160,7 +160,7 @@ namespace IUSystem.Middlewares
 
             for (int i = 0; i < 10; i++)
             {
-                var user = new IdentityUser { UserName = "DaskalTest@test.bg" + i, Email = "DaskalTest@test.bg" + i };
+                var user = new IdentityUser { UserName = "TeacherTest@test.bg" + i, Email = "TeacherTest@test.bg" + i };
                 var result = await userManager.CreateAsync(user, Constants.SEED_USERS_PASSWORD);
                 var id = Guid.NewGuid().ToString();
 
@@ -169,20 +169,20 @@ namespace IUSystem.Middlewares
                     var student = new Teacher
                     {
                         Id = id,
-                        FirstName = "Daskal" + i,
-                        MiddleName = "Daskalov" + i,
-                        LastName = "Daskalovski" + i,
+                        FirstName = "Teacher" + i,
+                        MiddleName = "Teacherov" + i,
+                        LastName = "Teachers" + i,
                         User = user,
                         Number = "69696969696969" + i
                     };
 
                     teachers.Add(student);
+                    await userManager.AddToRoleAsync(user, Constants.TEACHER_ROLE);
                 }
             }
 
             dbContext.Teachers.AddRange(teachers);
             await dbContext.SaveChangesAsync();
-
         }
     }
 }

@@ -1,0 +1,55 @@
+﻿@page
+@model IUSystem.Areas.Identity.Pages.Lectures.LecturesAllModel
+@{
+    ViewData["Title"] = "LecturesAll";
+}
+
+<h1>All Lectures</h1>
+
+<table class="table">
+    <thead style="color: white;">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Lectures[0].Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lectures[0].Subject.Name)
+            </th>
+            <th>
+                Time
+            </th>
+            <th>
+                Teacher
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="color: white;">
+        @foreach (var item in Model.Lectures)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime) - @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Teacher.FirstName) @Html.DisplayFor(modelItem => item.Teacher.LastName)
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page-handler="delete" onclick="return confirm('Are you sure you want to delete this item?');"
+                       asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-right">
+    <a asp-page="./LecturesAdd" class="btn btn-primary">Add</a>
+</div>

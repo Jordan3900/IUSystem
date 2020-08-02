@@ -24,7 +24,7 @@ namespace IUSystem.Data
 
         public DbSet<Student> Students { get; set; }
 
-        public DbSet<Lectures> Lectures { get; set; }
+        public DbSet<Lecture> Lectures { get; set; }
 
         public DbSet<Room> Rooms { get; set; }
 

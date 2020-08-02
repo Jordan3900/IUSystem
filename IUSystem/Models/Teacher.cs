@@ -13,7 +13,7 @@ namespace IUSystem.Models
     {
         public Teacher()
         {
-            this.Lectures = new HashSet<Lectures>();
+            this.Lectures = new HashSet<Lecture>();
         }
 
       
@@ -32,6 +32,6 @@ namespace IUSystem.Models
 
         public string LastName { get; set; }
 
-        public virtual ICollection<Lectures> Lectures { get; set; }
+        public virtual ICollection<Lecture> Lectures { get; set; }
     }
 }

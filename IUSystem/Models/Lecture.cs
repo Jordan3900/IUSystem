@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IUSystem.Models
 {
-    public class Lectures
+    public class Lecture
     {
         public string Id { get; set; }
 

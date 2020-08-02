@@ -1,0 +1,38 @@
+﻿@page
+@model IUSystem.Areas.Identity.Pages.Subjects.SubjectsAddModel
+@{
+}
+
+    <div class="container">
+        <h3>Add Subject</h3>
+        <hr />
+        <br />
+        <form method="post">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 text-center">
+                    <div>
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="form-group col-md-6">
+                    <label asp-for="StudentId"></label>
+                    <select asp-for="StudentId" class="form-control">
+                        <option selected="true" disabled="disabled">-- Choose Student --</option>
+                        @foreach (var student in Model.Students)
+                        {
+                            <option value="@student.Id">@student.FirstName @student.LastName No: @student.Number</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Grade"></label>
+                    <input asp-for="Grade" class="form-control" />
+                </div>
+            </div>
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a class="btn btn-secondary" href="/Identity/Subject/All">Cancel</a>
+        </form>
+    </div>

@@ -1,0 +1,52 @@
+﻿@page
+@model IUSystem.Areas.Identity.Pages.Students.EditStudentModel
+@{
+    ViewData["Title"] = "EditStudent";
+}
+
+<div class="container">
+    <h3>Edit Student</h3>
+    <hr />
+    <br />
+    <form method="post">
+        <input asp-for="Student.Id" type="hidden" />
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Student.FirstName"></label>
+                <input asp-for="Student.FirstName" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Student.LastName"></label>
+                <input asp-for="Student.LastName" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Student.Number"></label>
+                <input asp-for="Student.Number" class="form-control" />
+            </div>
+        </div>
+
+        <br />
+        <h3>Subjects</h3>
+        <hr />
+
+        @foreach (var item in Model.Subjects)
+        {
+            <div class="row">
+                <input type="hidden" name="Subjects.Index" value="@item.Id" />
+                <input type="hidden" name="Subjects[@item.Id].Id" value="@item.Id" />
+                <div class="col-md-4">
+                    <label asp-for="@item.Name"></label>
+                    <input name="Subjects[@item.Id].Name" value="@item.Name" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="@item.Grade"></label>
+                    <input name="Subjects[@item.Id].Grade" value="@item.Grade"  class="form-control" />
+                </div>
+            </div>
+        }
+        <br />
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a class="btn btn-secondary" href="/Identity/Students/studentsall">Cancel</a>
+    </form>
+</div>
+

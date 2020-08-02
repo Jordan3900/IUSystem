@@ -9,13 +9,13 @@ namespace IUSystem.Models
     {
         public Room()
         {
-            this.Lectures = new HashSet<Lectures>();
+            this.Lectures = new HashSet<Lecture>();
         }
 
         public string  Id { get; set; }
 
         public string Name { get; set; }
 
-        public virtual ICollection<Lectures> Lectures { get; set; }
+        public virtual ICollection<Lecture> Lectures { get; set; }
     }
 }

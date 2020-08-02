@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { NavItem, NavLink } from 'reactstrap';
+import { NavItem, NavLink, Dropdown, DropdownToggle, DropdownItem, DropdownMenu } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import authService from './AuthorizeService';
 import { ApplicationPaths } from './ApiAuthorizationConstants';
@@ -13,6 +13,7 @@ export class LoginMenu extends Component {
             userName: null,
             isAdmin: false,
             isTeacher: false,
+            dropdownOpen: false
         };
     }
 
@@ -50,6 +51,10 @@ export class LoginMenu extends Component {
         });
     }
 
+    toggle = () => {
+        this.setState({ dropdownOpen: !this.state.dropdownOpen })
+    }
+
     render() {
         const { isAuthenticated, userName, isAdmin, isTeacher } = this.state;
         if (!isAuthenticated) {
@@ -74,9 +79,20 @@ export class LoginMenu extends Component {
             </NavItem>
 
             {isAdmin ?
-                <NavItem>
-                    <NavLink tag={Link} className="text-white" to={profilePath}>Admin panel</NavLink>
-                </NavItem>
+                <Dropdown className="text-white" nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    <DropdownToggle className="text-white" nav caret>
+                        Admin Panel
+            </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem href="/Identity/Students/StudentsAll">Students</DropdownItem>
+                        <DropdownItem href="/Identity/Teachers/TeachersAll">Teachers</DropdownItem>
+                        <DropdownItem href="/Identity/Subjects/All">Subjects</DropdownItem>
+                        <DropdownItem href="/identity/Lectures/LecturesAll">Lectures</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+                // <NavItem>
+                //     <NavLink tag={Link} className="text-white" to={profilePath}>Admin panel</NavLink>
+                // </NavItem>
                 : null}
             <NavItem>
                 <NavLink tag={Link} className="text-white" to={logoutPath}>Logout</NavLink>
