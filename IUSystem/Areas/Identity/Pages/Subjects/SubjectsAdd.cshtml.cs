@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using IUSystem.Data;
 using IUSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IUSystem.Areas.Identity.Pages.Subjects
 {
+    [Authorize(Roles = "Admin")]
     public class SubjectsAddModel : PageModel
     {
         private readonly ApplicationDbContext dbContext;
@@ -22,6 +23,7 @@ namespace IUSystem.Areas.Identity.Pages.Subjects
         }
 
         [BindProperty]
+        [Required]
         public string Name { get; set; }
 
         [BindProperty]

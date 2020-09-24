@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using IUSystem.Data;
 using IUSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IUSystem.Areas.Identity.Pages.Students
 {
+    [Authorize(Roles = "Admin")]
     public class StudentsAllModel : PageModel
     {
         private readonly ApplicationDbContext dbContext;

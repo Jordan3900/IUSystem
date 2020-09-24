@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using IUSystem.Data;
 using IUSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IUSystem.Areas.Identity.Pages.Lectures
 {
+    [Authorize(Roles = "Admin")]
     public class LecturesAllModel : PageModel
     {
         private readonly ApplicationDbContext dbContext;
@@ -23,8 +25,6 @@ namespace IUSystem.Areas.Identity.Pages.Lectures
 
         public IActionResult OnGet()
         {
-
-
             return Page();
         }
 

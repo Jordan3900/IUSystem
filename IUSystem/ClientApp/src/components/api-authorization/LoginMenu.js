@@ -90,9 +90,6 @@ export class LoginMenu extends Component {
                         <DropdownItem href="/identity/Lectures/LecturesAll">Lectures</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-                // <NavItem>
-                //     <NavLink tag={Link} className="text-white" to={profilePath}>Admin panel</NavLink>
-                // </NavItem>
                 : null}
             <NavItem>
                 <NavLink tag={Link} className="text-white" to={logoutPath}>Logout</NavLink>

@@ -35,7 +35,6 @@
                     @Html.DisplayFor(modelItem => item.Grade)
                 </td>
                 <td>
-                    <a asp-area="Admin" asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-page-handler="delete" onclick="return confirm('Are you sure you want to delete this item?');"
                        asp-route-id="@item.Id">Delete</a>
                 </td>

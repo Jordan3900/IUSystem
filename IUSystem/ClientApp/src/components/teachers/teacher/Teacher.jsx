@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button
+  CardTitle, Button
 } from 'reactstrap';
 import avatar from './assets/avatar.svg'
 import { Link } from 'react-router-dom';
