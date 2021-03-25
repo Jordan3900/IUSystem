@@ -23,7 +23,7 @@ export class MyStudents extends Component {
             <Table className="text-white" dark striped>
                 <thead >
                     <tr>
-                        <th>##</th>
+                        <th>#</th>
                         <th>Name</th>
                         <th>Subject</th>
                         <th>Grade</th>
